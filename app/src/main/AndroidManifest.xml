@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.xd.rongyundemo">
+    //接收IM消息的自定义权限
+    <permission
+        android:name="com.xd.rongyundemo.permission.RECEIVE_MSG"
+        android:protectionLevel="signature" />
+    //使用接收IM消息权限
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <uses-permission android:name="com.xd.rongyundemo.permission.RECEIVE_MSG" />
+    //接收来电的自定义权限
+    <permission
+        android:name="com.xd.rongyundemo.permission.INCOMING_CALL"
+        android:protectionLevel="signature" />
+    //使用接收来电权限
+    <uses-permission android:name="com.xd.rongyundemo.permission.INCOMING_CALL" />
+    //允许程序打开网络
+    sockets
+    <uses-permission android:name="android.permission.INTERNET" />
+    //允许程序访问有关的网络信息
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    //允许程序访问Wi-Fi网络状态信息
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    //允许应用读写用户的外部存储器
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    //允许读取电话的状态
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    //允许一个程序获取信息有关当前或最近运行的任务，一个缩略的任务状态，是否活动等等
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    //允许程序录制音频
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    //允许应用程序修改全局声音设置的权限
+    <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    //允许使用PowerManager的WakeLocks在进程休眠时能够后台保持
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    //允许请求访问使用照相设备(如果使用视频通话则必选配置)
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        // SDK核心服务配置
+        <service
+            android:name="com.yuntongxun.ecsdk.ECClientService"
+            android:enabled="true"
+            android:process=":push" />
+        // 提高sdk服务存活率（v5.2.2r以后版本提供）
+        <service
+            android:name="com.yuntongxun.ecsdk.ECClientService$InnerService"
+            android:enabled="true"
+            android:process=":push" />
+        // 以下两项为SDK内部处理项，其中booter.Alarm在v5.1.9r以后版本提供
+        <receiver
+            android:name="com.yuntongxun.ecsdk.booter.CCPReceivers$AlarmReceiver"
+            android:process=":push" />
+        <receiver
+            android:name="com.yuntongxun.ecsdk.booter.Alarm"
+            android:exported="false"
+            android:process=":push" />
+        // SDK网络改变广播
+        <receiver
+            android:name="com.yuntongxun.ecsdk.booter.CCPReceivers$ConnectionReceiver"
+            android:process=":push">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+        // SDK广播通知配置（开机广播）// 可选广播、如果应用想做开机重启，可以实现该广播通知即可
+        <receiver
+            android:name="com.yuntongxun.ecsdk.booter.CCPReceivers$BootReceiver"
+            android:process=":push">
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <!-- // 声明自定义通知的广播接收器（需要替换包名，详见注意事项） -->
+        <!-- <receiver -->
+        <!-- android:name=".service.YuntxNotifyReceiver" -->
+        <!-- android:exported="false"> -->
+        <!-- <intent-filter> -->
+        <!-- // 接收push消息 -->
+        <!-- // action匹配规则{packageName + ".action" + "功能"} -->
+        <!-- <action android:name="com.xd.rongyundemo.action.VOIP_CALL" /> -->
+        <!-- <action android:name="com.xd.rongyundemo.action.MESSAGE" /> -->
+        <!-- <action android:name="com.xd.rongyundemo.action.NOTIFICATION_CLICK" /> -->
+        <!-- <action android:name="com.xd.rongyundemo.action.PERSON_VERSION" /> -->
+        <!-- </intent-filter> -->
+        <!-- </receiver> -->
+        <activity android:name=".VoiceActivity" />
+        <activity android:name=".VedioActivity"></activity>
+    </application>
+
+</manifest>
