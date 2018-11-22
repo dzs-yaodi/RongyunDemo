@@ -219,6 +219,10 @@ public class VedioActivity extends ECSuperActivity implements VoIPCallHelper.OnC
     public void onMakeCallFailed(String callId, int reason) {
         Log.i("info","===vedio==onMakeCallFailed= "+ callId );
         Log.i("info","===vedio==onMakeCallFailed= "+ reason );
+
+        Toast.makeText(this, "呼叫失败,对方可能不在线", Toast.LENGTH_SHORT).show();
+        VoIPCallHelper.releaseCall(mCallId);
+        finish();
     }
 
     @Override

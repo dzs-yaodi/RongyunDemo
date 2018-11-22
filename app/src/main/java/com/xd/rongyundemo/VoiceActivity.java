@@ -191,6 +191,9 @@ public class VoiceActivity extends ECSuperActivity implements VoIPCallHelper.OnC
     public void onMakeCallFailed(String callId, int reason) {
         Log.i("", "onMakeCallFailed:: call id " + callId);
         Log.i("", "onMakeCallFailed:: reason " + reason);
+        Toast.makeText(this, "呼叫失败,对方可能不在线", Toast.LENGTH_SHORT).show();
+        VoIPCallHelper.releaseCall(mCallId);
+        finish();
     }
 
     @Override
